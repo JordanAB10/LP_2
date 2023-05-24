@@ -1,0 +1,62 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+void dfs(int child, vector<vector<int>> &a, vector<bool> &visited){
+    cout<<child<<" ";
+    visited[child] = true;
+
+    for(int i=0; i<a[child].size(); i++){
+        if(!visited[a[child][i]]){
+            dfs(a[child][i],a,visited);
+        }
+    }
+}
+
+void bfs(int n,int e, vector<vector<int>> &a){
+    cout<<"BFS: "<<endl;
+    vector<bool> visited(n+1);
+
+    queue<int> q;
+    visited[1] = true;
+
+    q.push(1);
+    while(!q.empty()){
+        int c = q.front();
+        q.pop();
+        cout<<c<<" ";
+        for(int i=0; i<a[c].size();i++){
+            if(!visited[a[c][i]]){
+                q.push(a[c][i]);
+                visited[a[c][i]] = true;
+            }
+        }
+    }
+    cout<<endl;
+}
+
+
+int main(){
+    cout<<"Enter the number of nodes: ";
+    int n;
+    cin>>n;
+    cout<<"Enter the number of edges: ";
+    int e;
+    cin>>e;
+
+    vector<vector<int>> a(n+1);
+    for(int i=0;i<e;i++){
+        int u,v;
+        cout<<"Enter the edge "<<i+1<<": ";
+        cin>>u>>v;
+        a[u].push_back(v);
+        a[v].push_back(u);
+    }
+
+    vector<bool> visited(n+1);
+
+    cout<<"DFS: "<<endl;
+    dfs(1,a,visited);
+    cout<<endl;
+    bfs(n,e,a);
+    return 0;
+}

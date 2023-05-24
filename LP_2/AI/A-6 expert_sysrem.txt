@@ -1,0 +1,61 @@
+Questions = [
+    'Do you have cough?',
+    'Do you have sore throat?',
+    'Do you have fever?',
+    'Are you experiencing any excessive sweating?',
+    'Do you have an itchy throat?',
+    'Do you have a runny nose?' ,
+    'Do you have a stuffed nose? ',
+    'Do you have headache? ',
+    'Do you feel tired without actually exhausting yourself?'
+]
+
+Threshold = {
+    'Mild' : 30,
+    'Severe' : 50,
+    'Extreme' : 75,
+}
+
+
+def expertSystem(questions,threshold):
+    score = 0
+
+    for question in questions:
+        print(question+" (y/n)")
+        ans= input(">")
+        if ans.lower() == 'y':
+            print("On a Scale of 1-10 how bad it is? ")
+            ip = input('>')
+            while((not ip.isnumeric()) or int(ip) < 1 or int(ip) > 10):
+                print('Enter a valid input !')
+                ip = input('>')
+            score += int(ip)
+    
+    print()
+    print()
+
+    if score>= threshold['Extreme']:
+        print("You are showing symptons of having Extreme COVID-19")
+        print()
+
+    elif score >= threshold['Severe']:
+        print("Based on your answers You are showing Symptoms of SEVERE COVID-19")
+        print()
+
+    elif score >= threshold['Mild']:
+        print("Based on your answers You are showing Symptoms of VERY MILD COVID-19")
+        print()
+    
+    else:
+        print("You are Showing NO Symptoms of COVID-19")
+        print("This might be a false negative, If you feel unsure , please get Tested")
+        print()
+
+    print("For any further queries visit : https://www.aarogyasetu.gov.in/")
+    print()
+
+if '__main__' == __name__:
+    print("\n------- WELCOME TO THE COVID-19 EXPERT SYSTEM -------")
+    print("NOTE: Please answer the following questions very honestly\n\n")
+    expertSystem(Questions,Threshold)
+

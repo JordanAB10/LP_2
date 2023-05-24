@@ -1,0 +1,24 @@
+public class curr {
+    public Integer result {get;set;}
+    public Integer a{get;set;}
+    
+    public void conv_dol(){
+        result = a/80;
+        System.debug('Dollar'+result);
+    }
+    
+    public void conv_euro(){
+        result = a/90;
+        System.debug('Euro'+result);
+    }
+    
+    public void conv_dirham(){
+        result = a/23;
+        System.debug('Dirham'+result);
+    }
+    
+    public void conv_pound(){
+        result = a/102;
+        System.debug('Pound'+result);
+    }
+}

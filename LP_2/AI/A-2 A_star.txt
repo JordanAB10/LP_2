@@ -1,0 +1,100 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+
+int heuristicFunction(vector<vector<int>> &a, vector<vector<int>> &f){
+    vector<pair<int,int>> initial (9);
+    vector<pair<int,int>> final (9);
+
+    for(int i=0;i<3;i++){
+        for(int j=0; j<3;j++){
+            initial[a[i][j]] = {i,j};
+            final[f[i][j]] = {i,j};
+        }
+    }
+    int cost = 0;
+    for(int i=0;i<9;i++){
+        cost += abs(initial[i].first - final[i].first);
+        cost += abs(initial[i].second - final[i].second);
+    }
+
+    return cost;
+}
+
+
+void eightPuzzleProblem(vector<vector<int>> &a, vector<vector<int>> &f, int cost){
+    if(a==f){
+        cout<<cost<<endl;
+        return;
+    }
+
+    int x,y; // position of 0
+    for(int i=0; i<3; i++){
+        for(int j=0; j<3; j++){
+            if(a[i][j] == 0){
+                x = i;
+                y = j;
+                break;
+            }
+        }
+    }
+
+    vector<array<int,3>> v;
+    if(x+1<3){
+        swap(a[x+1][y],a[x][y]);
+        int c = heuristicFunction(a,f);
+        swap(a[x+1][y],a[x][y]);
+        array<int,3> sa = {c,x+1,y};
+        v.push_back(sa);
+    }
+    
+    if(x-1 >= 0){
+        swap(a[x-1][y],a[x][y]);
+        int c = heuristicFunction(a,f);
+        swap(a[x-1][y],a[x][y]);
+        array<int,3> sa = {c,x-1,y};
+        v.push_back(sa);
+    }
+
+    if(y+1<3){
+        swap(a[x][y+1],a[x][y]);
+        int c = heuristicFunction(a,f);
+        swap(a[x][y+1],a[x][y]);
+        array<int,3> sa = {c,x,y+1};
+        v.push_back(sa);
+    }
+
+    if(y-1>=0){
+        swap(a[x][y-1],a[x][y]);
+        int c = heuristicFunction(a,f);
+        swap(a[x][y-1],a[x][y]);
+        array<int,3> sa = {c,x,y-1};
+        v.push_back(sa);
+    }
+
+    sort(v.begin(),v.end());
+    swap(a[x][y],a[v[0][1]][v[0][2]]);
+    eightPuzzleProblem(a,f,cost+1);
+    
+}
+
+
+int main(){
+    vector<vector<int>> a(3,vector<int> (3));
+    vector<vector<int>> f = {
+        {1,2,3},
+        {8,0,4},
+        {7,6,5}
+    };
+
+    cout<<"Enter the initial state in the form of 3x3 matrix: "<<endl;
+    for(int i=0; i<3; i++){
+        for(int j=0;j<3;j++){
+            cin>>a[i][j];
+        }
+    }
+
+    cout<<"COST : ";
+    eightPuzzleProblem(a,f,0);
+    return 0;
+}

@@ -1,0 +1,17 @@
+<apex:page controller="curr" showHeader="true">
+  <apex:form >
+  <apex:pageBlock title="curr_conv">
+  NUMBER 1: <apex:inputText value="{!a}"/><br/><br/>
+   <apex:pageBlockButtons >
+   <apex:commandButton value="ind to doll" action="{!conv_dol}" />
+   <apex:commandButton value="ind to euro" action="{!conv_euro}" />
+       <apex:commandButton value="ind to dirham" action="{!conv_dirham}" />
+       <apex:commandButton value="ind to pound" action="{!conv_pound}" />
+       
+      </apex:pageBlockButtons>
+ 
+  <b>Output is:<apex:outputText value="{!result}"></apex:outputText></b>
+  </apex:pageBlock>
+  </apex:form>
+
+</apex:page>

@@ -1,0 +1,74 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+bool is_safe(int row, int col, vector<string> &chess_board, int n){
+    int i,j;
+    i = row;
+    j = col;
+    while(i>=0 && j>=0){
+        if(chess_board[i][j]=='Q'){
+            return false;
+        }
+        i--;
+        j--;
+    }
+    i = row;
+    j = col;
+    while(j>=0){
+        if(chess_board[i][j]=='Q'){
+            return false;
+        }
+        j--;
+    }
+    i = row;
+    j = col;
+    while(i<n && j>=0){
+        if(chess_board[i][j]=='Q'){
+            return false;
+        }
+        i++;
+        j--;
+    }
+    return true;
+}
+
+void n_queen(int n, vector<string> &chess_board, vector<vector<string>> &pattern, int col){
+    if(col==n){
+        pattern.push_back(chess_board);
+        return;
+    }
+    for(int i=0; i<n; i++){
+        if(is_safe(i,col,chess_board,n)){
+            chess_board[i][col] = 'Q';
+            n_queen(n,chess_board,pattern,col+1);
+            chess_board[i][col] = '-';
+        }
+    }
+}
+
+
+
+int main(){
+    int n;
+    cout<<"Enter the number of queens: ";
+    cin>>n;
+
+    vector<vector<string>> pattern;
+    vector<string> chess_board(n);
+    string initial (n,'-');
+
+    for(int i=0; i<n; i++){
+        chess_board[i] = initial;
+    }
+
+    n_queen(n, chess_board, pattern, 0);
+
+    for(int i=0; i<pattern.size(); i++){
+        cout<<"Pattern "<<i+1<<endl;
+        for(int j=0; j<pattern[0].size(); j++){
+            cout<<pattern[i][j]<<" "<<endl;
+        }
+        cout<<endl;
+    }
+    return 0;
+}
